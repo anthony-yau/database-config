@@ -1,5 +1,6 @@
 1、mysql.spec，用于构建mysql rpm包的spec描述文件
 用法：
+
 yum -y install rpm-build redhat-rpm-config gcc gcc-c++ cmake make zlib-devel openssl-devel
 
 创建rpmbuild构建目录：
