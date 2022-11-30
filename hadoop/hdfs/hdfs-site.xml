@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>2</value>
+    </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file:///data/namedata</value>
+    </property>
+    <property>
+        <name>dfs.hosts.exclude</name>
+        <value>/opt/hadoop/etc/hadoop/exclude_nodes</value>
+    </property>
+    <property>    
+        <name>dfs.blocksize</name>
+        <value>134217728</value>    
+    </property>
+    <property>    
+        <name>dfs.namenode.handler.count</name>    
+        <value>100</value>
+    </property>
+    <property>
+        <name>dfs.namenode.heartbeat.recheck-interval</name>
+        <value>600000</value>
+        <description>ms</description>
+    </property>
+    <property>
+        <name>dfs.namenode.service.handler.count</name>
+        <value>50</value>
+    </property>
+    <!-- IPC config -->
+    <property>
+        <name>ipc.server.listen.queue.size</name>
+        <value>12800</value>
+    </property>
+    <property>
+        <name>ipc.maximum.data.length</name>
+        <value>268435456</value>
+    </property>
+    <property>
+        <name>ipc.client.connect.timeout</name>
+        <value>60000</value>
+    </property>
+    <!--配置机架感知-->
+    <property>
+        <name>net.topology.script.file.name</name>
+        <value>/root/datanode_rock.py</value>
+    </property>
+    <!--HDFS HA START-->
+    <!--服务名称-->
+    <property>
+        <name>dfs.nameservices</name>
+        <value>hdfs-yau01</value>
+    </property>
+    <!--NameNode 唯一ID-->
+    <property>
+        <name>dfs.ha.namenodes.hdfs-yau01</name>
+        <value>nn1,nn2</value>
+    </property>
+    <!--NameNode RPC监听地址-->
+    <property>
+        <name>dfs.namenode.rpc-address.hdfs-yau01.nn1</name>
+        <value>yau-t01:9000</value>
+    </property>
+    <property>
+        <name>dfs.namenode.rpc-address.hdfs-yau01.nn2</name>
+        <value>yau-t02:9000</value>
+    </property>
+    <!--NameNode Service RPC监听地址, 用于DataNode等其他节点连接-->
+    <property>
+        <name>dfs.namenode.servicerpc-address.hdfs-yau01.nn1</name>
+        <value>yau-t01:53310</value>
+    </property>
+    <property>
+        <name>dfs.namenode.servicerpc-address.hdfs-yau01.nn2</name>
+        <value>yau-t02:53310</value>
+    </property>
+    <!--NameNode HTTP监听地址 -->
+    <property>
+        <name>dfs.namenode.http-address.hdfs-yau01.nn1</name>
+        <value>yau-t01:9870</value>
+    </property>
+    <property>
+        <name>dfs.namenode.http-address.hdfs-yau01.nn2</name>
+        <value>yau-t02:9870</value>
+    </property>
+    <!--JournalNodes 地址 -->
+    <property>
+        <name>dfs.namenode.shared.edits.dir</name>
+        <value>qjournal://yau-t02:8485;yau-t03:8485;yau-t04:8485/hdfs-yau01</value>
+    </property>
+    <!--HDFS 客户端判断Active NameNode的类 -->
+    <property>
+        <name>dfs.client.failover.proxy.provider.hdfs-yau01</name>
+        <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+    </property>
+    <!--进行Failover时的fence方法(支持sshfence/shell) -->
+    <property>
+        <name>dfs.ha.fencing.methods</name>
+        <value>sshfence</value>
+    </property>
+    <property>
+        <name>dfs.ha.fencing.ssh.private-key-files</name>
+        <value>/root/.ssh/id_rsa</value>
+    </property>
+    <property>
+        <name>dfs.ha.fencing.ssh.connect-timeout</name>
+        <value>30000</value>
+    </property>
+    <!--JournalNode 存储目录-->
+    <property>
+        <name>dfs.journalnode.edits.dir</name>
+        <value>/data/journalnode</value>
+    </property>
+    <!--HDFS HA END-->
+    <!--HDFS HA Auto Failover START-->
+    <property>
+        <name>dfs.ha.automatic-failover.enabled</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>ha.zookeeper.quorum</name>
+        <value>yau-t01:2181,yau-t02:2181,yau-t03:2181</value>
+    </property>
+    <property>
+        <name>ha.zookeeper.session-timeout.ms</name>
+        <value>5000</value>
+    </property>
+    <property>
+        <name>dfs.ha.zkfc.port</name>
+        <value>8019</value>
+    </property>
+    <!--HDFS HA Auto Failover END-->
+    <property>
+        <name>ha.failover-controller.cli-check.rpc-timeout.ms</name>
+        <value>60000</value>
+    </property>
+    <property>
+        <name>dfs.image.transfer.bandwidthPerSec</name>
+        <value>52428800</value>
+    </property>
+    <!-- Client Config START-->
+    <property>
+        <name>dfs.client.block.write.replace-datanode-on-failure.enable</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>dfs.client.block.write.replace-datanode-on-failure.policy</name>
+        <value>ALWAYS</value>
+    </property>
+    <!-- 设置为True可能会有数据丢失，默认是False-->
+    <property>
+        <name>dfs.client.block.write.replace-datanode-on-failure.best-effort</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>dfs.client.socket-timeout</name>
+        <value>300000</value>
+    </property>
+    <!-- Client Config END-->
+
+    <!-- DataNode Config START-->
+    <property>
+        <name>dfs.datanode.socket.write.timeout</name>
+        <value>6000000</value>
+    </property>
+    <!--datanode数据存储目录，可以指定多个不同的设备目录-->
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>/data/datanode</value>
+    </property>
+    <!-- 避免磁盘写满(保留5G) -->
+    <property>
+        <name>dfs.datanode.du.reserved</name>
+        <value>5368709120</value>
+        <description>Reserved space in bytes per volume. Always leave this much space free for non dfs use.</description>
+    </property>
+    <property>  
+        <name>dfs.datanode.fsdataset.volume.choosing.policy</name>  
+        <value>org.apache.hadoop.hdfs.server.datanode.fsdataset.AvailableSpaceVolumeChoosingPolicy</value>  
+    </property>
+    <property>  
+        <name>dfs.blockreport.intervalMsec</name>  
+        <value>3600000</value>  
+    </property>
+    <!-- DataNode Config END-->
+</configuration>
